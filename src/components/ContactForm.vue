@@ -31,6 +31,7 @@
             <button v-if="contactLocal._id" type="button" class="ml-2 btn btn-danger" @click="deleteContact">
                 Xóa
             </button>
+            <button class="btn btn-info ml-2" v-on:click="goBack">Quay Lại</button>
         </div>
     </Form>
 </template>
@@ -56,11 +57,13 @@ export default {
                 .max(50, "Tên có nhiều nhất 50 ký tự."),
             email: yup
                 .string()
+                .required("Email phải có giá trị.")
                 .email("E-mail không đúng.")
                 .max(50, "E-mail tối đa 50 ký tự."),
-            address: yup.string().max(100, "Địa chỉ tối đa 100 ký tự."),
+            address: yup.string().max(100, "Địa chỉ tối đa 100 ký tự.").required("Địa chỉ phải có giá trị."),
             phone: yup
                 .string()
+                .required("Số điện thoại phải có giá trị.")
                 .matches(
                     /((09|03|07|08|05)+([0-9]{8})\b)/g,
                     "Số điện thoại không hợp lệ."
@@ -78,6 +81,9 @@ export default {
         deleteContact() {
             this.$emit("delete:contact", this.contactLocal.id);
         },
+        goBack() {
+            window.history.back();
+        }
     },
 };
 </script>
